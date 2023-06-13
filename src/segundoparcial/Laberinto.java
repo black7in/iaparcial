@@ -38,6 +38,52 @@ public class Laberinto {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length
                 && m[i][j] == 0;
     }
+    
+        public static LinkedList<Regla> reglasAplicablesRey(int m[][], int i, int j) {
+        LinkedList<Regla> L1 = new LinkedList<>();
+
+        // Movimiento hacia la izquierda superior
+        if (posValida(m, i - 1, j - 1)) {
+            L1.add(new Regla(i - 1, j - 1));
+        }
+
+        // Movimiento hacia arriba
+        if (posValida(m, i - 1, j)) {
+            L1.add(new Regla(i - 1, j));
+        }
+
+        // Movimiento hacia la derecha superior
+        if (posValida(m, i - 1, j + 1)) {
+            L1.add(new Regla(i - 1, j + 1));
+        }
+
+        // Movimiento hacia la izquierda
+        if (posValida(m, i, j - 1)) {
+            L1.add(new Regla(i, j - 1));
+        }
+
+        // Movimiento hacia la derecha
+        if (posValida(m, i, j + 1)) {
+            L1.add(new Regla(i, j + 1));
+        }
+
+        // Movimiento hacia la izquierda inferior
+        if (posValida(m, i + 1, j - 1)) {
+            L1.add(new Regla(i + 1, j - 1));
+        }
+
+        // Movimiento hacia abajo
+        if (posValida(m, i + 1, j)) {
+            L1.add(new Regla(i + 1, j));
+        }
+
+        // Movimiento hacia la derecha inferior
+        if (posValida(m, i + 1, j + 1)) {
+            L1.add(new Regla(i + 1, j + 1));
+        }
+
+        return L1;
+    }
 
     public static LinkedList<Regla> reglasAplicablesCaballo(int m[][], int i, int j) {
         LinkedList<Regla> L1 = new LinkedList();
@@ -138,30 +184,44 @@ public class Laberinto {
     public static LinkedList<Regla> reglasAplicablesReina(int m[][], int i, int j) {
         LinkedList<Regla> L1 = new LinkedList<>();
 
-        // Movimiento horizontal y vertical
-        for (int k = 0; k < m.length; k++) {
-            if (k != i) {
-                L1.add(new Regla(k, j)); // Movimiento vertical
-            }
-            if (k != j) {
-                L1.add(new Regla(i, k)); // Movimiento horizontal
-            }
+        // Movimiento en diagonal superior izquierda
+        for (int fila = i - 1, columna = j - 1; posValida(m, fila, columna); fila--, columna--) {
+            L1.add(new Regla(fila, columna));
         }
 
-        // Movimiento diagonal
-        for (int k = 1; k < m.length; k++) {
-            if (posValida(m, i - k, j - k)) {
-                L1.add(new Regla(i - k, j - k)); // Movimiento diagonal superior izquierdo
-            }
-            if (posValida(m, i - k, j + k)) {
-                L1.add(new Regla(i - k, j + k)); // Movimiento diagonal superior derecho
-            }
-            if (posValida(m, i + k, j - k)) {
-                L1.add(new Regla(i + k, j - k)); // Movimiento diagonal inferior izquierdo
-            }
-            if (posValida(m, i + k, j + k)) {
-                L1.add(new Regla(i + k, j + k)); // Movimiento diagonal inferior derecho
-            }
+        // Movimiento en la dirección superior
+        for (int fila = i - 1; posValida(m, fila, j); fila--) {
+            L1.add(new Regla(fila, j));
+        }
+
+        // Movimiento en diagonal superior derecha
+        for (int fila = i - 1, columna = j + 1; posValida(m, fila, columna); fila--, columna++) {
+            L1.add(new Regla(fila, columna));
+        }
+
+        // Movimiento en la dirección izquierda
+        for (int columna = j - 1; posValida(m, i, columna); columna--) {
+            L1.add(new Regla(i, columna));
+        }
+
+        // Movimiento en la dirección derecha
+        for (int columna = j + 1; posValida(m, i, columna); columna++) {
+            L1.add(new Regla(i, columna));
+        }
+
+        // Movimiento en diagonal inferior izquierda
+        for (int fila = i + 1, columna = j - 1; posValida(m, fila, columna); fila++, columna--) {
+            L1.add(new Regla(fila, columna));
+        }
+
+        // Movimiento en la dirección inferior
+        for (int fila = i + 1; posValida(m, fila, j); fila++) {
+            L1.add(new Regla(fila, j));
+        }
+
+        // Movimiento en diagonal inferior derecha
+        for (int fila = i + 1, columna = j + 1; posValida(m, fila, columna); fila++, columna++) {
+            L1.add(new Regla(fila, columna));
         }
 
         return L1;
