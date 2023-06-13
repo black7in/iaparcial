@@ -40,22 +40,31 @@ public class Laberinto {
     }
 
     public static LinkedList<Regla> reglasAplicablesCaballo(int m[][], int i, int j) {
-        LinkedList<Regla> L1 = new LinkedList<>();
-
-        int[][] movimientos = {
-            {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2},
-            {1, -2}, {1, 2}, {2, -1}, {2, 1}
-        };
-
-        for (int[] movimiento : movimientos) {
-            int nuevaFila = i + movimiento[0];
-            int nuevaColumna = j + movimiento[1];
-
-            if (posValida(m, nuevaFila, nuevaColumna)) {
-                L1.add(new Regla(nuevaFila, nuevaColumna));
-            }
+        LinkedList<Regla> L1 = new LinkedList();
+        if (posValida(m, i - 1, j - 2)) {
+            L1.add(new Regla(i - 1, j - 2));
         }
-
+        if (posValida(m, i - 2, j - 1)) {
+            L1.add(new Regla(i - 2, j - 1));
+        }
+        if (posValida(m, i - 2, j + 1)) {
+            L1.add(new Regla(i - 2, j + 1));
+        }
+        if (posValida(m, i - 1, j + 2)) {
+            L1.add(new Regla(i - 1, j + 2));
+        }
+        if (posValida(m, i + 1, j + 2)) {
+            L1.add(new Regla(i + 1, j + 2));
+        }
+        if (posValida(m, i + 2, j + 1)) {
+            L1.add(new Regla(i + 2, j + 1));
+        }
+        if (posValida(m, i + 2, j - 1)) {
+            L1.add(new Regla(i + 2, j - 1));
+        }
+        if (posValida(m, i + 1, j - 2)) {
+            L1.add(new Regla(i + 1, j - 2));
+        }
         return L1;
     }
 
